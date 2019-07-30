@@ -7,8 +7,8 @@ module PrawnInvoice
         @data = data
       end
 
-      def render_pdf
-        raise PrawnInvoice::Error.new("Must define a `render_pdf` instance method on your custom template class")
+      def generate_pdf
+        raise PrawnInvoice::Error.new("Must define a `generate_pdf` instance method on your custom template class")
       end
 
       def self.theme_name

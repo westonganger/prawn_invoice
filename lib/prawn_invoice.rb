@@ -6,10 +6,12 @@ require "prawn_invoice/mime"
 require "prawn_invoice/action_controller_renderer"
 
 require "prawn_invoice/templates"
+require "prawn_invoice/templates/base_template"
+require "prawn_invoice/templates/default"
 
 module PrawnInvoice
 
-  def self.to_pdf(template: PrawnInvoice::Templates::Default, data: )
+  def self.to_pdf(data:, template: PrawnInvoice::Templates::Default)
     if template.is_a?(PrawnInvoice::Templates::BaseTemplate)
       @template = template
     else
@@ -18,12 +20,12 @@ module PrawnInvoice
 
     validate_schema(template: template, data: data)
 
-    template.render_pdf
+    template.generate_pdf.render
   end
 
-  def self.to_pdf_file(filename: , **args)
-    File.write(filename, "wb") do |f|
-      f.write self.to_pdf(*args)
+  def self.to_pdf_file(filename:, data:, template: PrawnInvoice::Templates::Default)
+    File.open(filename, "wb") do |f|
+      f.write self.to_pdf(data: data, template: template)
     end
   end
 

@@ -39,7 +39,7 @@ module PrawnInvoice
       }
 
 
-      def render_pdf
+      def generate_pdf
         Prawn::Document.generate("invoice.pdf") do
 
           [render_bio, render_skills, render_experience, render_education].each do |data|
